@@ -1,0 +1,15 @@
+netconvert --osm-files map.osm -o map.net.xml
+
+python /home/andremonzigo/sumo-0.32.0/tools/randomTrips.py --intermediate 5 -n map.net.xml --trip-attributes="type=\"30km\"" --additional-file 30km.add.xml -r map.rou.xml -e 300 -l
+
+===== edit the .rou and .alt.rou to departPos="0.00" =====
+
+sumo-gui map.sumo.cfg ??????????????????????- only if you want to show sumo in gui
+
+sumo -c map.sumo.cfg --fcd-output map.sumo.xml
+
+python /home/andremonzigo/sumo-0.32.0/tools/traceExporter.py --fcd-input map.sumo.xml --ns2config-output config.tcl --ns2mobility-output mobility.tcl --ns2activity-output activity.tcl
+
+--------------------
+
+python /home/andremonzigo/sumo-0.32.0/tools/randomTrips.py -n map.net.xml --trip-attributes="type=\"100km\"" --additional-file 100km.add.xml -r map.rou.xml -e 300 -l
